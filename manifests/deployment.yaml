@@ -1,0 +1,65 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: guacamole
+  labels:
+    app: guacamole
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: guacamole
+    spec:
+      containers:
+
+      - name: guacamole-ui
+        image: guacamole/guacamole:0.9.14
+        env:
+        - name: GUACD_HOSTNAME
+          value: guacamole-server
+        - name: GUACD_PORT
+          value: "4822"
+        - name: MYSQL_HOSTNAME
+          value: $MYSQL_HOSTNAME
+        - name: MYSQL_DATABASE
+          value: $MYSQL_DATABASE
+        - name: MYSQL_USER
+          value: $MYSQL_USER
+        - name: MYSQL_PASSWORD
+          value: $MYSQL_PASSWORD
+        - name: MYSQL_ROOT_PASSWORD
+          value: $MYSQL_ROOT_PASSWORD
+        ports:
+        - containerPort: 8080 
+          name: http-ui
+      #   volumeMounts:
+      #   - name: mysql-persistent-storage
+      #     mountPath: /var/lib/mysql
+      # volumes:
+      # - name: mysql-persistent-storage
+      #   persistentVolumeClaim:
+      
+      - name: guacamole-server
+        image: guacamole/guacd:0.9.14
+        env:
+        - name: MYSQL_HOSTNAME
+          value: $MYSQL_HOSTNAME
+        - name: MYSQL_DATABASE
+          value: $MYSQL_DATABASE
+        - name: MYSQL_USER
+          value: $MYSQL_USER
+        - name: MYSQL_PASSWORD
+          value: $MYSQL_PASSWORD
+        - name: MYSQL_ROOT_PASSWORD
+          value: $MYSQL_ROOT_PASSWORD
+        ports:
+        - containerPort: 4822
+          name: guacd
+      #   volumeMounts:
+      #   - name: mysql-persistent-storage
+      #     mountPath: /var/lib/mysql
+      # volumes:
+      # - name: mysql-persistent-storage
+      #   persistentVolumeClaim:
