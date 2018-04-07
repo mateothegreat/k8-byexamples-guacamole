@@ -5,8 +5,18 @@ metadata:
   labels:
     app: guacamole
 spec:
-  ports:
-    - port: 8080
+
+  type: LoadBalancer
+  loadBalancerIP: 35.225.46.49
+  externalTrafficPolicy: Local    
+    
   selector:
     app: guacamole
-#   clusterIP: None
+
+  ports:
+  
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+      name: ui 
+

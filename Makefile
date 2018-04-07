@@ -23,3 +23,5 @@ logs:
 initdb:
 
 	docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --mysql > initdb.sql
+	mysql -h mysql.default.svc.cluster.local -u root -pmysql -e "CREATE DATABASE guacamole_db"
+	mysql -h mysql.default.svc.cluster.local -u root -pmysql guacamole_db < initdb.sql

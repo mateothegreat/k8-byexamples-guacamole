@@ -1,0 +1,22 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: guacamole.streaming-platform.com
+spec:
+  secretName: tls-guacamole.streaming-platform.com
+  issuerRef:
+    name: letsencrypt-staging-cluster-issuer
+    kind: ClusterIssuer
+  commonName: guacamole.streaming-platform.com
+  dnsNames:
+  - guacamole.streaming-platform.com
+  acme:
+    config:
+    - http01:
+        ingressClass: nginx
+      domains:
+      - guacamole.streaming-platform.com
+    - http01:
+        ingress: guacamole.streaming-platform.com
+      domains:
+      - guacamole.streaming-platform.com
