@@ -15,7 +15,7 @@ spec:
       containers:
 
       - name: guacamole-ui
-        image: guacamole/guacamole:0.9.14-RC1
+        image: guacamole/guacamole:0.9.14
         # image: appsoa/docker-guacamole
         env:
         - name: GUACD_HOSTNAME
@@ -43,7 +43,7 @@ spec:
       #   persistentVolumeClaim:
       
       - name: guacamole-server
-        image: guacamole/guacd:0.9.14-RC1
+        image: guacamole/guacd:0.9.14
         env:
         - name: MYSQL_HOSTNAME
           value: $MYSQL_HOSTNAME
